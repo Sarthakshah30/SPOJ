@@ -1,0 +1,17 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int x,y,z;
+		while( (x=input.nextInt())!=0 | (y=input.nextInt())!=0 | (z=input.nextInt())!=0 )
+		{
+			if(z-y==y-x)
+				System.out.println("AP "+(z+(z-y)));
+			else if(z/y == y/x)
+				System.out.println("GP "+(z*(z/y)));
+		}
+	}
+}
