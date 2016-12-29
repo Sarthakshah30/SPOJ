@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int number;
+	cin>>number;
+	while(number-->0)
+	{
+		int num1,num2,rev1,rev2,rem;
+		cin>>num1>>num2;
+		rev1=rev2=0;
+		while(num1>0)
+		{
+			rem=num1%10;
+			rev1=rev1*10+rem;
+			num1=num1/10;
+		}
+			while(num2>0)
+		{
+			rem=num2%10;
+			rev2=rev2*10+rem;
+			num2=num2/10;
+		}
+		rev1=rev1+rev2;
+		rev2=0;
+		while(rev1>0)
+		{
+			rem=rev1%10;
+			rev2=rev2*10+rem;
+			rev1=rev1/10;
+		}
+		cout<<rev2<<endl;
+	}
+}
