@@ -1,0 +1,14 @@
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int test = input.nextInt();
+		while(test-->0)
+		{
+			int n = input.nextInt();
+			int res = ((n)*(n+1)*(2*n+1))/6;
+			System.out.println(res);
+		}
+	}
+}
