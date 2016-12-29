@@ -1,0 +1,20 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test--)
+	{
+		long int number;
+		cin>>number;
+		int sum=0;
+		for(int i =  5 ; i<=number ; i*=5)
+		{
+			sum+=(number/i);
+		}
+		cout<<sum<<endl;
+	}
+}
