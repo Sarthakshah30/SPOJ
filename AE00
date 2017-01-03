@@ -1,0 +1,21 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int test=input.nextInt();
+		int sum=0;
+		int i=1;
+		while(true)
+		{
+			int n = test/i - (i-1);
+			if(n>=1)
+			{ sum+=n; i++; }
+			else
+			break;
+		}
+		System.out.println(sum);
+	}
+}
