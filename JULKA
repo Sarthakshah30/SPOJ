@@ -1,0 +1,20 @@
+import java.math.BigInteger;
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		
+		Scanner input = new Scanner(System.in);
+		for(int i = 0 ; i < 10 ;i++)
+		{
+			BigInteger total = input.nextBigInteger();
+			BigInteger diff = input.nextBigInteger();
+			BigInteger y = total.subtract(diff).divide(new BigInteger("2"));
+			BigInteger x = total.subtract(y);
+			System.out.println(x);
+			System.out.println(y);
+		}
+	}
+}
