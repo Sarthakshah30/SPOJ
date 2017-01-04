@@ -1,0 +1,16 @@
+import java.math.BigInteger;
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int test = input.nextInt();
+		while(test-->0)
+		{
+			long k = input.nextLong();
+			System.out.println((192+250*(k-1)));
+		}
+	}
+}
