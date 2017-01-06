@@ -1,0 +1,27 @@
+import java.math.BigInteger;
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		double sum=0;
+		double c;
+		
+		while((c=input.nextDouble())!=0.00)
+		{
+			if(c<0)
+				System.out.println(0+" card(s)");
+			else{
+			sum=0;
+			int i;
+			for(i = 1 ; sum<c ; i++)
+			{
+				sum+=(double)1/(i+1);
+			}
+			System.out.println(i-1+" card(s)");
+			}
+		}
+	}
+}
