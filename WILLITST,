@@ -1,0 +1,15 @@
+import java.math.BigInteger;
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		long n = input.nextLong();
+		if((n&(n-1))==0)
+			System.out.println("TAK");
+		else
+			System.out.println("NIE");
+	}
+}
