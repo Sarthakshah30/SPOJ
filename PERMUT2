@@ -1,0 +1,37 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		while(true)
+		{
+			int number = input.nextInt();
+			if(number==0)
+				break;
+			else
+			{
+				int array[] = new int[number+1];
+				for(int i = 1 ; i<=number ; i++)
+				{
+					array[i] = input.nextInt();
+				}
+				
+				int i;
+				for(i = 1 ; i<=number ; i++)
+				{
+					if(array[array[i]]!= i)
+						break;
+				}
+				if(i==number+1)
+					System.out.println("ambiguous");
+				else
+					System.out.println("not ambiguous");
+				
+			}
+		}
+	}
+	
+	
+}
