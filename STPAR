@@ -1,0 +1,52 @@
+import java.util.*;
+import java.lang.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int n;
+		while((n=input.nextInt())!=0)
+		{
+			boolean flag=false;
+			int[] array = new int[n];
+			int req=1;
+			Stack<Integer> stack = new Stack<Integer>();
+			for(int i = 0 ; i< n ;i++)
+			{
+				array[i]=input.nextInt();
+				
+			}
+			for(int i = 0 ; i < n  && !flag ;i++)
+			{
+				if(array[i]==req)
+				{
+					req++;
+				}
+				else if(!stack.isEmpty() && stack.lastElement()==req)
+				{
+					stack.pop();
+					req++;
+					i--;
+				}
+				else if((stack.isEmpty() && array[i]>req) ||!stack.isEmpty() && stack.lastElement()>array[i])
+				{
+					stack.push(array[i]);
+				}
+
+				else
+				{
+					flag=true;
+				}
+
+			}
+
+			if(flag)
+				System.out.println("no");
+			else
+				System.out.println("yes");
+			
+		}
+	}
+}
