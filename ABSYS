@@ -1,0 +1,69 @@
+import java.util.*;
+
+
+public class apples {
+		public static void main(String args[])
+		{
+			Scanner input = new Scanner(System.in);
+			int test = input.nextInt();
+			input.nextLine();
+			while(test-->0)
+			{
+				
+				input.nextLine();
+				String text = input.nextLine();
+				String s1="";
+				String s2="";
+				String s3="";
+				boolean flag=true;
+				int i;
+				for(i = 0 ; i < text.length() && text.charAt(i)!=' ';i++)
+				{
+					if(text.charAt(i)=='m' || !flag)
+						{ s1="machula"; flag=false;}
+					else
+						s1=s1+text.charAt(i);
+				}
+				i+=3;
+				flag=true;
+				for(; i < text.length() && text.charAt(i)!=' ';i++)
+				{
+					if(text.charAt(i)=='m' || !flag)
+						{ s2="machula"; flag=false;}
+					else
+						s2=s2+text.charAt(i);
+				}
+				i+=3;
+				flag=true;
+				for(; i < text.length();i++)
+				{
+					if(text.charAt(i)=='m' || !flag)
+						{ s3="machula"; flag=false;}
+					else
+						s3=s3+text.charAt(i);
+				}
+				
+				if(s1.equals("machula"))
+				{
+					int b = Integer.parseInt(s2);
+					int c = Integer.parseInt(s3);
+					int a = c - b;
+					System.out.println(a+" + "+b+" = "+c);
+				}
+				else if(s2.equals("machula"))
+				{
+					int a = Integer.parseInt(s1);
+					int c = Integer.parseInt(s3);
+					int b = c-a;
+					System.out.println(a+" + "+b+" = "+c);
+				}
+				else
+				{
+					int a = Integer.parseInt(s1);
+					int b = Integer.parseInt(s2);
+					int c = a+b;
+					System.out.println(a+" + "+b+" = "+c);
+				}
+			}
+		}
+}
