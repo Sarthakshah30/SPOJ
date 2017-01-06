@@ -1,0 +1,37 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int test = input.nextInt();
+		while(test-->0)
+		{
+			int number = input.nextInt();
+			int n = (int)Math.ceil(calRoot(2*number));
+			int limit = (n*(n+1))/2;
+			int bottom = limit - n+1;
+			int offset = number - bottom;
+			if(n%2!=0)
+			{
+			int numerator = n-offset;
+			int denominator = 1+ offset;
+			System.out.println("TERM "+number+" IS "+numerator+"/"+denominator);
+			}
+			else
+			{
+				int numerator = 1+ offset;
+				int denominator = n-offset;
+				System.out.println("TERM "+number+" IS "+numerator+"/"+denominator);
+			}
+		}
+	}
+	
+	public static double calRoot(int number)
+	{
+		double r1 = (-1 + Math.sqrt(1+(4*number)) )  / 2	;
+		double r2 = (-1 - Math.sqrt(1+(4*number)) )  / 2	;
+		return r1 > r2 ? r1 : r2;
+	}
+}
