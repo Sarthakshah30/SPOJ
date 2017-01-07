@@ -1,0 +1,91 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+long long int findInv(long long int *array,long long int n);
+void mergeSort(long long int *array,long long int n);
+void merge(long long int *array,long long int *left,long long int *right,long long int n,long long int mid);
+long long int count=0;
+
+int main()
+{
+	int test;
+	string str;
+	cin>>test;
+	getline(cin,str);
+	while(test-->0)
+	{
+		count=0;
+		long long int n;
+		cin>>n;
+		long long int array[n];
+		for(long long int i = 0 ; i< n ;i++)
+		{
+			cin>>array[i];
+		}
+		
+		cout<<findInv(array,n)<<endl;
+			getline(cin,str);
+	}
+}
+
+long long int findInv(long long int *array,long long int n)
+{
+	
+	mergeSort(array,n);
+	return count;
+}
+
+void mergeSort(long long int *array,long long int n)
+{
+	if(n>1)
+	{
+		long long int mid = n/2;
+		long long int left[mid];
+		long long int right[n-mid];
+		
+		for(long long int i = 0 ; i < mid ; i++)
+		left[i]=array[i];
+		for(long long int i = mid ; i < n ;i++)
+		right[i-mid]=array[i];
+		
+		mergeSort(left,mid);
+		mergeSort(right,n-mid);
+		merge(array,left,right,n,mid);
+	}
+}
+
+void merge(long long int *array,long long int *left,long long int *right,long long int n,long long int mid)
+{
+	int i,j,k;
+	i=j=k=0;
+	long long int nl = mid;
+	long long int nr = n-mid;
+	
+	while(i<nl && j<nr)
+	{
+		if(left[i]<=right[j])
+		{
+			array[k++]=left[i++];
+		}
+		else
+		{
+			array[k++]=right[j++];
+			count+=nl-i;
+		}
+	}
+	if(i<nl)
+	{
+		while(i<nl)
+		{
+			array[k++]=left[i++];
+		}
+	}
+	if(j<nr)
+	{
+			while(j<nr)
+		{
+			array[k++]=right[j++];
+		}
+	}
+}
