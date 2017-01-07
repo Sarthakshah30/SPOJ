@@ -1,0 +1,18 @@
+import java.util.*;
+
+class apples
+{
+	public static final double PI = 3.14159;
+	
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		double n;
+		while((n=input.nextDouble())!=0)
+		{
+			double radius = n/PI;
+			System.out.printf("%.2f\n",((PI*radius*radius)/2));
+		}
+		
+	}
+}
