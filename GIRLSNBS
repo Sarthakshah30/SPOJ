@@ -1,0 +1,21 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int G,B;
+		while((G=input.nextInt())!= -1 && (B=input.nextInt())!=-1)
+		{
+			if(G<B)
+			{
+				int temp=G;
+				G=B;
+				B=temp;
+			}
+			int temp =(int) Math.ceil(G*1.0/(B+1));
+			System.out.println(temp);
+		}
+	}
+}
