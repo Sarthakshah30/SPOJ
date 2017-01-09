@@ -1,0 +1,78 @@
+#include<iostream>
+#include<string>
+#include<map>
+using namespace std;
+
+class apples
+{
+	public :
+		
+	map<string,long long int> M;
+	
+	apples() 
+	{
+
+		M["10"]=1;
+		M["11"]=2;
+		M["12"]=2;
+		M["13"]=2;
+		M["14"]=2;
+		M["15"]=2;
+		M["16"]=2;
+		M["17"]=2;
+		M["18"]=2;
+		M["19"]=2;
+		M["20"]=1;
+		M["21"]=2;
+		M["22"]=2;
+		M["23"]=2;
+		M["24"]=2;
+		M["25"]=2;
+		M["26"]=2;
+	}
+	
+	long long int findCode(string str)
+	{
+		if(str.length()==0)
+		return 0;
+		else if(str[0]=='0')
+		return 0;
+		else if(str.length()==1)
+		return 1;
+		if(M.find(str)==M.end())
+		{
+
+			long long int x = findCode(str.substr(1,str.length()));
+			long long int y;
+			if(str[0]>='3')
+			{
+					y=0;
+			}
+			else
+			{
+				if(str[0]=='2' && str[1] >'6')
+				y=0;
+				else
+				 y = findCode(str.substr(2,str.length()));
+			}
+			
+			M[str]=(x+y);
+			return x+y;
+		}
+		else
+		return M[str];
+	}
+};
+
+int main()
+{
+	apples ap;
+	while(true)
+	{
+		string str;
+		cin>>str;
+		if(str[0]=='0')
+		break;
+		cout<<ap.findCode(str)<<endl;
+	}
+}
