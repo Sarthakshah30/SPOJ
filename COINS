@@ -1,0 +1,51 @@
+#include<iostream>
+#include<map>
+using namespace std;
+
+
+
+class apples
+{
+	public :
+	map<long long int,long long int>  M;
+	
+	apples()
+	{
+		M[0]=0;
+		M[1]=1;
+	}
+	
+	long long int findCoins(long long int n)
+	{
+		if(M.find(n)==M.end())
+		{
+			long long int n1 = findCoins(n/2);
+			long long int n2 = findCoins(n/3);
+			long long int n3 = findCoins(n/4);
+			if(n1+n2+n3 > n)
+			{
+				M[n]=(n1+n2+n3);
+				return n1+n2+n3;
+			}
+			else
+			{
+				M[n]=n;
+				return n;
+			}
+		}
+		else
+		return M[n];
+	}
+};
+
+int main()
+{
+	int test=10;
+	apples ap;
+	while(test-->0)
+	{
+		long long int n;
+		cin>>n;
+		cout<<ap.findCoins(n)<<endl;
+	}
+}
