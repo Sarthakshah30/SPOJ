@@ -1,0 +1,32 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+	long long int test;
+	while(true)
+	{
+		cin>>test;
+		if(test==-1)
+		break;
+		else
+		{
+			long long int term=1;
+			for(int i = 1;; i++)
+			{
+				term = term+(i-1)*6;
+				if(term==test)
+				{ 
+					cout<<"Y"<<endl;
+					break;
+				}
+				else if(term>test)
+				{
+					cout<<"N"<<endl;
+					break;
+				}
+			}
+		}
+	}
+}
