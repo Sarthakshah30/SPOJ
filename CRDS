@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	long long int test;
+	cin>>test;
+	while(test-->0)
+	{
+		long long int n;
+		cin>>n;
+		long long int term1 = 2;
+		long long int term2 = ((n-1)+(4)+(n-1)*2)*n;
+		long long int sum = (term2/term1)%1000007;
+		cout<<sum<<endl;
+	}
+}
