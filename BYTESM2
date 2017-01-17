@@ -1,0 +1,85 @@
+#include<iostream>
+
+using namespace std;
+
+class apples
+{
+		public:
+			int array[200][200];
+			int row,col;
+			int dp[200][200];
+			
+			apples(int r,int c)
+			{
+				row=r;
+				col=c;
+				for(int i = 0 ; i < r ; i++)
+					for(int j = 0 ; j < c ;j++)
+					{
+						cin>>array[i][j];
+						if(i!=r-1)
+						dp[i][j+1]=0;
+						else
+						dp[i][j+1]=array[i][j];
+					}
+					
+				for(int i = 0 ; i < r ; i++)
+				{
+					dp[i][0]=0;
+					dp[i][c+1]=0;
+				}
+				cout<<endl<<endl;
+			}
+			
+			int	calculate()
+			{
+				for(int i = row-2; i >=0 ; i--)
+				{
+					for(int j = 1 ; j <=col ; j++)
+					{
+						dp[i][j]=array[i][j-1]+min(dp[i+1][j],dp[i+1][j-1],dp[i+1][j+1]);
+					}
+				}
+				
+				int maxE=dp[0][1];
+				for(int j = 1; j <=col ;j++)
+				{
+					if(maxE<dp[0][j])
+					maxE=dp[0][j];
+				}
+				
+				return maxE;
+			}
+			
+			int min(int a,int b,int c)
+			{
+				if(a>b)
+					{
+						if(a>c)
+						return a;
+						else
+						return c;
+					}
+					else
+					{
+						if(b>c)
+						return b;
+						else
+						return c;
+					}
+			}
+			
+};
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int row,col;
+		cin>>row>>col;
+		apples ap(row,col);
+		cout<<ap.calculate()<<endl;
+	}
+}
