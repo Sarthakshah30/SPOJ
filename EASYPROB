@@ -1,0 +1,71 @@
+#include<iostream>
+
+using namespace std;
+
+void calC(int n,int power);
+
+void toPrint(int n)
+{
+	if(n==0)
+	cout<<"2(0)";
+	else if(n==1)
+	cout<<"2";
+	else if(n==2)
+	cout<<"2(2)";
+	else
+	{
+		cout<<"2(";
+		calC(n,0);
+		cout<<")";
+	}
+}
+
+void calC(int n,int power)
+{
+	if(n==0)
+	return;
+	bool flag =false;
+	int rem = n % 2;
+	n=n/2;
+	if(n>0)
+	{
+	flag = true;
+	calC(n,power+1);
+	}
+	
+	if(rem==0)
+	return;
+	else
+	{
+		
+		if(flag==true)
+		cout<<"+";
+		toPrint(power);
+	}
+}
+
+
+int main()
+{
+	cout<<"137=";
+	calC(137,0);
+	cout<<endl;
+	cout<<"1315=";
+	calC(1315,0);
+	cout<<endl;
+	cout<<"73=";
+	calC(73,0);
+	cout<<endl;
+	cout<<"136=";
+	calC(136,0);
+	cout<<endl;
+	cout<<"255=";
+	calC(255,0);
+	cout<<endl;
+	cout<<"1384=";
+	calC(1384,0);
+	cout<<endl;
+	cout<<"16385=";
+	calC(16385,0);
+	cout<<endl;
+}
