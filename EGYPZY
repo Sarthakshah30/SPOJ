@@ -1,0 +1,89 @@
+
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int n = input.nextInt();
+		int half=0,onefourth=0,threefourth=0;
+		int k=n;
+		input.nextLine();
+		while(k-->0)
+		{
+			
+			String str = input.nextLine();
+			if(str.charAt(0)=='1')
+			{
+				if(str.charAt(2)=='4')
+				{
+					onefourth++;
+				}
+				else
+				{
+					half++;
+				}
+			}
+			else
+			{
+				threefourth++;
+			}
+		}
+		
+		int sum=1;
+		
+		if(n>0)
+		{
+			if(threefourth >= onefourth)
+			{
+				
+				onefourth=0;
+				sum+=(threefourth);
+				threefourth=0;
+			}
+			else if(threefourth!=0 && onefourth>threefourth)
+			{
+				onefourth-=threefourth;
+				sum+=(threefourth);
+				threefourth=0;
+			}
+			
+			if(half!=0)
+			{
+				if(half%2==0)
+				{
+					sum+=(half/2);
+					half=0;
+				}
+				else
+				{
+					sum+=(half/2);
+					half=half/2;
+					if(onefourth>=2)
+					{
+						onefourth-=2;
+						sum++;
+						half=0;
+					}
+					else
+					{
+						half=0;
+						sum++;
+						onefourth=0;
+					}
+				}
+			}
+			
+			if(onefourth!=0)
+			{
+				sum+=(onefourth/4);
+				onefourth=onefourth%4;
+				if(onefourth!=0)
+					sum++;
+			}
+			
+		}
+		System.out.println(sum);
+	}
+}
