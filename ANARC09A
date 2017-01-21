@@ -1,0 +1,50 @@
+
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int count=0;
+		while(true)
+		{
+			String str = input.nextLine();
+			if(str.charAt(0)=='-')
+				break;
+			else
+			{
+				count++;
+				Stack<Character> stack = new Stack<Character>();
+				int sum=0;
+				for(int i = 0 ; i < str.length() ;i++)
+				{
+					if(str.charAt(i)=='{' && i!=str.length()-1)
+					{
+						stack.push(str.charAt(i));
+					}
+					else if(str.charAt(i)=='{' && i==str.length()-1)
+					{
+						stack.pop();
+						sum++;
+					}
+					else if(str.charAt(i)=='{')
+					{
+						stack.push(str.charAt(i));
+					}
+					else if(str.charAt(i)=='}' && stack.isEmpty())
+					{
+						sum++;
+						stack.push('{');
+					}
+					else if(str.charAt(i)=='}')
+					{
+						stack.pop();
+					}
+				}
+				sum=sum+(stack.size()/2);
+				System.out.println(count+"."+" "+sum);
+			}
+		}
+	}
+}
