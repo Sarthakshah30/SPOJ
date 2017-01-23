@@ -1,0 +1,54 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	long long int n;
+	long long int m;
+	scanf("%lld%lld",&n,&m);
+	bool flag=true;
+	long long int *array = new long long int[n];
+	for(long long int i = 0 ; i< n ;i++)
+	{
+		scanf("%lld",&array[i]);
+		if(array[i]==m)
+		{
+			flag = false;
+		}
+	}
+	if(flag==false)
+	printf("%lld\n",m);
+	else
+	{
+		long long int index=0;
+		long long int max=0;
+		long long int local=0;
+		for(long long int i = 0 ; i < n ;i++)
+		{
+			if(array[i]>m)
+			{
+				local=0;
+				index=i;
+				continue;
+			}
+			local=local+array[i];
+			if(local>m)
+			{
+				while(local>m)
+				{
+					local=local-array[index];
+					index++;
+				}
+			}
+			if(local==m)
+			{
+				max=m;
+				break;
+			}
+			if(local>max)
+			max=local;
+		}
+		printf("%lld\n",max);
+	}
+}
