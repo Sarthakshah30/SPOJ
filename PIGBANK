@@ -1,0 +1,70 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+long long int findMin(int total,int numOfCoins,int **array);
+long long int dp[12000];
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int empty;
+		int full;
+		cin>>empty>>full;
+		int numOfCoins;
+		cin>>numOfCoins;
+		int  *array[numOfCoins];
+		bool flag=false;
+		for(int i = 0 ;i < numOfCoins ;i++)
+		{
+			array[i]= new int[2];
+			cin>>array[i][0];
+			cin>>array[i][1];
+			if(array[i][1]<=(full-empty))
+			flag=true;
+		}
+
+		if(flag==false)
+		{
+			cout<<"This is impossible."<<endl;
+		}
+		else
+		{
+			long long int answer=findMin(full-empty,numOfCoins,array);
+			if(answer==INT_MAX)
+			cout<<"This is impossible."<<endl;
+			else
+			cout<<"The minimum amount of money in the piggy-bank is "<<answer<<"."<<endl;
+		}
+	}
+}
+
+long long int  findMin(int total,int numOfCoins,int **array)
+{
+	dp[0]=0;
+	for(int i = 1 ; i <= total ;i++)
+	{
+		
+		int temp = INT_MAX;
+		
+		for(int j = 0 ; j<numOfCoins ;j++)
+		{
+			int temp1=INT_MAX;
+			if(array[j][1]<=i)
+			{
+				if(dp[i-array[j][1]]!=INT_MAX || i-array[j][1]==0)
+				temp1=array[j][0]+dp[i-array[j][1]];
+			
+			}
+			if(temp1 < temp) temp = temp1;
+		}
+		if(temp==INT_MAX)
+		dp[i]=INT_MAX;
+		else
+		dp[i]=temp;
+	}
+	return dp[total];
+}
