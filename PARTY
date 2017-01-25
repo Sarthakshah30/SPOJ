@@ -1,0 +1,66 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+	while(true)
+	{
+		int budget,totalParties;
+		cin>>budget>>totalParties;
+		if(!budget && !totalParties)
+		break;
+		int fun[totalParties+1];
+		int entrance[totalParties+1];
+		for(int i = 1 ; i <= totalParties ;i++)
+		{
+			cin>>entrance[i];
+			cin>>fun[i];
+		}
+		
+		
+		int dp[totalParties+1][budget+1];
+		int entranceCount[totalParties+1][budget+1];
+		memset(dp,0,sizeof(dp[0][0]*(budget+1)*(totalParties+1)));
+		memset(entranceCount,0,sizeof(entranceCount[0][0]*(budget+1)*(totalParties+1)));
+		
+		for(int i = 0 ; i <=totalParties ; i++)
+		{
+			for(int j =0 ; j<=budget ; j++)
+			{
+				if(i==0 || j==0)
+				{ dp[i][j]=0; entranceCount[i][j]=0;}
+				else if(entrance[i]>j)
+				{
+					dp[i][j]=dp[i-1][j];
+					entranceCount[i][j]=entranceCount[i-1][j];
+				}
+				else
+				{
+					int temp1,temp2;
+					temp1=dp[i-1][j];
+					temp2=dp[i-1][j-entrance[i]]+fun[i];
+					if(temp1>temp2)
+					{
+						dp[i][j]=temp1;
+						entranceCount[i][j]=entranceCount[i-1][j];
+					}
+					else if(temp1<temp2)
+					{
+						dp[i][j]=temp2;
+						entranceCount[i][j]=entranceCount[i-1][j-entrance[i]]+entrance[i];
+					}
+					else
+					{
+						dp[i][j]=temp1;
+						if(entranceCount[i-1][j-entrance[i]]+entrance[i] >entranceCount[i-1][j])
+						entranceCount[i][j]=entranceCount[i-1][j];
+						else
+						entranceCount[i][j]=entranceCount[i-1][j-entrance[i]]+entrance[i];
+					}
+				}
+			}
+		}
+		cout<<entranceCount[totalParties][budget]<<" "<<dp[totalParties][budget]<<endl;
+	}
+}
