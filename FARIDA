@@ -1,0 +1,41 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+	int test;
+	cin>>test;
+	int c=0;
+	while(c++<test)
+	{
+		long long int n;
+		cin>>n;
+		long long int array[n];
+		for(long long int i = 0 ; i< n ;i++)
+		cin>>array[i];
+		
+		if(n==0)
+		cout<<"Case "<<c<<": 0"<<endl;
+		else
+		{
+			long long int dp[n];
+			for(long long int i = 0 ; i<n ;i++)
+			{
+				if(i==0)
+				dp[i]=array[i];
+				else if(i==1)
+				{
+					dp[i]=(dp[i-1]>array[i] ? dp[i-1] : array[i]);
+				}
+				else
+				{
+					long long int temp1 = dp[i-1];
+					long long int temp2 = dp[i-2]+array[i];
+					dp[i]=(temp1 > temp2 ? temp1 : temp2);
+				}
+			}
+		cout<<"Case "<<c<<": "<<dp[n-1]<<endl;	
+		}
+	}
+}
