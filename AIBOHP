@@ -1,0 +1,44 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+	int test;
+	cin>>test;
+	
+	while(test-->0)
+	{
+		string str;
+		string rev;
+		cin>>rev;
+		str=rev;
+		std::reverse(rev.begin(),rev.end());
+		str=" "+str;
+		rev=" "+rev;
+		int x=rev.length();
+		int dp[x][x];
+		for(int i = 0 ; i < x ;i++)
+		{
+			for(int j=0 ; j < x ;j++)
+			{
+				if(i==0 ||j==0)
+				{
+					dp[i][j]=0;
+				}
+				else if(str[i]==rev[j])
+				{
+					dp[i][j]=1+dp[i-1][j-1];
+				}
+				else
+				{
+					int temp = dp[i-1][j];
+					int temp2 = dp[i][j-1];
+					dp[i][j]= (temp > temp2 ? temp :temp2 );
+				}
+			}
+		}
+		cout<<x-1-dp[x-1][x-1]<<endl;
+	}
+}
