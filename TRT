@@ -1,0 +1,32 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	int n;
+	cin>>n;
+	int array[n];
+	for(int i=0; i < n ; i++)
+	cin>>array[i];
+	int limit = n;
+	int dp[n][n];
+	
+	for(int k = 0 ; k < n ;k++)
+	{
+		limit = n-k;
+		for(int i = 0 ; i <limit ; i++)
+		{
+			int j = i+k;
+			if(i==j)
+			dp[i][j]=array[i]*limit;
+			else
+			{
+				int temp = array[i]*limit + dp[i+1][j];
+				int temp2 = array[j]*limit + dp[i][j-1];
+				dp[i][j]=(temp > temp2 ? temp : temp2);
+			}
+		}	
+	}
+	cout<<dp[0][n-1]<<endl;	
+}
