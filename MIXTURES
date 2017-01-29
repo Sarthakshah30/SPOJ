@@ -1,0 +1,57 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+int sum(int i,int j,int *array)
+{
+	int total=0;
+	for(int k = i ; k<= j ;k++)
+	total+=array[k];
+	return total;
+}
+
+int main()
+{
+	int n;
+	while(scanf("%d",&n) != -1)
+	{
+		int array[n+1];
+		for(int i = 1 ; i <= n ;i++)
+		{
+			scanf("%d",&array[i]);
+		}
+		if(n==1)
+		printf("0\n");
+		else
+		{
+			
+		int dp[n+1][n+1];
+		for(int i = 1 ; i <= n ; i++)
+		dp[i][i]=0;
+		
+		for(int limit = 1 ; limit <n ;limit++)
+		{
+			for(int i = 1 ; i <=n-limit ; i++)
+			{
+				
+				int j = i+limit;
+				dp[i][j]=INT_MAX;
+				if(i==j-1)
+				{
+					dp[i][j]=array[i]*array[j];
+				}
+				else
+				{
+					for(int k= i ; k< j ;k++)
+					{
+						int limit = dp[i][k]+dp[k+1][j]+ ((sum(i,k,array)%100) * (sum(k+1,j,array)%100));
+						if(limit < dp[i][j])
+						dp[i][j]=limit;
+					}
+				}
+			}
+		}
+		printf("%d\n",dp[1][n]);
+		}
+	}
+}
