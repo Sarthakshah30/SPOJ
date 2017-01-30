@@ -1,0 +1,45 @@
+import java.util.*;
+
+class apples
+{
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		String a,b;
+		while(input.hasNext())
+		{
+			a=input.next();
+			b=input.next();
+			if(a==null || b==null)
+			break;
+			char array[]=a.toCharArray();
+			char barray[]=b.toCharArray();
+			ArrayList<Character> listA = new ArrayList<Character>();
+			ArrayList<Character> listB = new ArrayList<Character>();
+			for(Character c : array)
+			{
+				listA.add(c);
+			}
+			for(Character c : barray)
+			{
+				listB.add(c);
+			}
+			String result="";
+			for(int i = 0 ; i < listA.size() ;i++)
+			{
+				char x = listA.get(i);
+				int index = listB.indexOf(x);
+				
+				if(index>=0)
+				{
+					listB.remove(index);
+					result=result+x;
+				}
+			}
+			char res[]=result.toCharArray();
+			Arrays.sort(res);
+			result = new String(res);
+			System.out.println(result);
+		}
+	}
+}
