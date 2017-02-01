@@ -1,0 +1,87 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int num_of_friends,amount;
+		cin>>num_of_friends>>amount;
+		int array[amount+1];
+		int items=amount;
+		for(int i = 1 ; i <=amount; i++)
+		{
+			cin>>array[i];
+		}
+		int dp[amount+1][amount+1];
+		int included[amount+1][amount+1];
+		dp[0][0]=0;
+		included[0][0]=0;
+		for(int i = 0 ; i <= items ; i++)
+		{
+			for(int j =0 ; j <=amount ; j++)
+			{
+				if(i==0 && j>0)
+				{
+					included[i][j]=0;
+					dp[i][j]=INT_MAX;
+				}
+				else if(i>0 && j==0)
+				{
+					included[i][j]=0;
+					dp[i][j]=0;
+				}
+				else if(i > j)
+				{
+					included[i][j]=included[i-1][j];
+					dp[i][j]=dp[i-1][j];
+				}
+				else if( j >=i && i>0)
+				{
+					if(array[i]==-1)
+					{
+						dp[i][j]=dp[i-1][j];
+						included[i][j]=included[i-1][j];
+					}
+					else
+					{
+						int temp = i;
+						int local=INT_MAX;
+						for(int x = 1 ; temp <= j ; temp+=i,x++)
+						{
+							if(dp[i-1][j-temp]==INT_MAX)
+							continue;
+							int templ = dp[i-1][j-temp]+array[i]*x;
+							if(templ < local)
+							{
+								if(included[i-1][j-temp]+x <= num_of_friends)
+								{
+									local = dp[i-1][j-temp]+array[i]*x;
+									included[i][j]=included[i-1][j-temp]+x;
+								}
+							}
+						}
+						if(local >= dp[i-1][j])
+						{
+							included[i][j]=included[i-1][j];
+							dp[i][j]=dp[i-1][j];
+						}
+						else
+						{
+								dp[i][j]=local;
+						}
+					}
+					
+				}
+			}
+			
+		}
+		if(dp[amount][amount]==INT_MAX)
+		cout<<-1<<endl;
+		else
+		cout<<dp[amount][amount]<<endl;
+	}
+}
