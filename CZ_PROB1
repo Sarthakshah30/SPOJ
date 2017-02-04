@@ -1,0 +1,66 @@
+#include<iostream>
+#include<vector>
+#include<cstring>
+using namespace std;
+
+vector<int> vec;
+
+
+void findPrimes()
+{
+	bool primes[10001];
+	memset(primes,true,sizeof(primes[0])*10001);
+	primes[2]=true;
+	for(int i = 2 ; i*i <10001 ;i++)
+	{
+		if(primes[i]==true)
+		{
+			for(int j = i*2 ; j<10001 ;j+=i)
+			{
+				primes[j]=false;
+			}
+		}
+	}
+	vec.push_back(2);
+	for(int i = 2 ; i <10001 ;i++)
+	{
+		if(primes[i]==true && (i-1)%4==0)
+		vec.push_back(i);
+	}
+}
+
+int result(int total,int k)
+{
+	int dp[total+1][4];
+	dp[0][0]=1;
+	dp[0][1]=1;
+	dp[0][2]=1;
+	dp[0][3]=1;
+	for(int i = 1 ; i <= total ; i++)
+	{
+		for(int j = 1 ; j <=k ;j++)
+		{
+			dp[i][j]=0;
+			for(int p = 1 ; p <=j ;p++)
+			{
+				if(i-p>=0)
+				dp[i][j]+=dp[i-p][p];	
+			}
+		}
+	}
+	return dp[total][k];
+}
+
+int main()
+{
+	findPrimes();
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int n,k;
+		cin>>n>>k;
+		cout<<result(vec[n-1],k)<<endl;
+	}
+}
+
