@@ -1,0 +1,49 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+	int test;
+	scanf("%d",&test);
+	while(test-->0)
+	{
+		int total;
+		int number;
+		scanf("%d%d",&total,&number);
+		int weight[number+1];
+		int value[number+1];
+		for(int i = 1 ; i<=number ; i++)
+		scanf("%d",&weight[i]);
+		for(int i = 1; i <=number ;i++)
+		scanf("%d",&value[i]);
+
+		
+		int dp[number+1][total+1];
+		memset(dp,0,sizeof(dp[0][0])*(total+1)*(number+1));
+		for(int i = 1 ; i <=number ; i++)
+		{
+			for(int j = 1 ; j<=total ;j++)
+			{
+				if(weight[i]>j)
+				{
+					dp[i][j]=dp[i-1][j];
+				}
+				else
+				{
+					dp[i][j]=0;
+					int local = dp[i-1][j];
+					int temp=0;
+					for(int temp = weight[i] ; temp<=j ; temp+=weight[i])
+					{
+						int locale = dp[i-1][j-temp]+value[i]*(temp/weight[i]);
+						if(locale>dp[i][j])
+						dp[i][j]=locale;
+					}
+					dp[i][j]=(dp[i][j]>local ? dp[i][j] : local);
+				}
+			}
+		}
+		printf("%d\n",dp[number][total]);
+		}
+}
