@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+	long long int test;
+	scanf("%lld",&test);
+	while(test-->0)
+	{
+		long long int n;
+		scanf("%lld",&n);
+		long long int array[n];
+		for(long long int i = 0 ; i<n ;i++)
+		scanf("%lld",&array[i]);
+		long long int dp[n+4];
+
+		memset(dp,0,sizeof(dp[0])*(n+4));
+		dp[n]=0;
+		dp[n+1]=0;
+		dp[n+2]=0;
+		dp[n+3]=0;
+
+		for(long long int i = n-1 ; i >=0 ;i--)
+		{
+			
+			long long int local1=array[i]+dp[i+2];
+			long long int local2,local3;
+			local2=local3=0;
+			if(i+1<n)
+			{
+				local2=array[i]+array[i+1]+dp[i+4];
+			}
+			if(i+2<n)
+			{
+				local3=array[i]+array[i+1]+array[i+2]+dp[i+6];
+			}
+			dp[i]=(local1 > local2 ?(local1 > local3 ? local1 : local3):(local2>local3 ? local2 : local3));
+		}
+		
+		printf("%lld\n",dp[0]);
+	}
+}
