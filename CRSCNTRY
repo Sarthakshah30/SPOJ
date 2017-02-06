@@ -1,0 +1,75 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int findMax(int *agnes,int agnesNum,int *tom,int tomNum)
+{
+	int dp[agnesNum+1][tomNum+1];
+	memset(dp,0,sizeof(dp[0][0])*(agnesNum+1)*(tomNum+1));
+	
+	for(int i =1 ; i<= agnesNum ;i++)
+	{
+		for(int j=1 ; j<=tomNum ; j++)
+		{
+			if(agnes[i]==tom[j])
+			{
+				dp[i][j]=1+dp[i-1][j-1];
+			}
+			else
+			{
+				dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+			}
+		}
+	}
+	return dp[agnesNum][tomNum];
+}
+
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int agnes[2001];
+		int agnesNum=0;
+		int x;
+		int answer=0;
+		while(true)
+		{
+			cin>>x;
+			if(x==0)
+			break;
+			else
+			{
+				agnes[++agnesNum]=x;
+			}
+		}
+		
+		while(true)
+		{
+			
+			cin>>x;
+			if(x==0)
+			break;
+			else
+			{
+				int tom[2001];
+				tom[1]=x;
+				int y,tomNum=1;
+				while(true)
+				{
+					cin>>y;
+					if(y==0)
+					break;
+					else
+					{
+						tom[++tomNum]=y;
+					}
+				}
+				answer=max(answer,findMax(agnes,agnesNum,tom,tomNum));
+			}
+		}
+		cout<<answer<<endl;
+	}
+}
