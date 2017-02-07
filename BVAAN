@@ -1,0 +1,66 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+		char str1[100];
+		char str2[100];
+		int calculate(int i,int j,int k,short int dp[100][100][100]);
+		
+int main()
+{
+	int test;
+	scanf("%d",&test);
+	while(test-->0)
+	{
+		scanf("%s%s",str1,str2);
+		int k;
+		int length1,length2;
+		length1=strlen(str1);
+		length2=strlen(str2);
+		scanf("%d",&k);
+		short int dp[100][100][100];
+		memset(dp,-1,sizeof(dp[0][0][0])*(100)*(100)*(100));
+		int answer=calculate(length1-1,length2-1,k,dp);
+		cout<<answer<<endl;
+	}
+}
+
+int calculate(int i,int j,int k, short int dp[100][100][100])
+{
+	if(i<0 || j<0 || (k>0 && i<0) || (k>0 && j<0))
+	return 0;
+	else if(dp[i][j][k-1]>=0)
+	return dp[i][j][k-1];
+	else
+	{
+		if(str1[i]!=str2[j])
+		{
+			int local1=calculate(i-1,j,k,dp);
+			int local2=calculate(i,j-1,k,dp);
+			if(local1>local2)
+			dp[i][j][k-1]=local1;
+			else
+			dp[i][j][k-1]=local2;
+			
+		}
+		else
+		{
+			int local1=calculate(i-1,j-1,k,dp);
+			int local2=0;
+			if(k-1>0)
+			local2=calculate(i-1,j-1,k-1,dp);
+			if(local2==0 && k-1>0)
+			dp[i][j][k-1]=0;
+			else
+			{
+				local2=local2+str1[i];
+				if(local2>local1)
+				dp[i][j][k-1]=local2;
+				else
+				dp[i][j][k-1]=local1;
+			}
+		}
+	
+		return dp[i][j][k-1];
+	}
+}
