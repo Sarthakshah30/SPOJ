@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+	int test;
+	scanf("%d",&test);
+	while(test-->0)
+	{
+		char str[2000];
+		scanf("%s",str);
+		int number = strlen(str);
+		
+		int dp[3][number+1];
+		memset(dp,0,sizeof(dp[0][0])*(number+1)*(3));
+		
+		dp[0][number]=dp[1][number]=dp[2][number]=0;
+		
+		    for(int i=2 ; i>=0 ; i--)
+			{
+				for(int j= number-1 ; j>=0 ; j--)
+				{
+					if(i==0)
+					{
+						if(str[j]=='K')
+						{
+							dp[i][j]=dp[i+1][j+1]+dp[i][j+1];
+						}
+						else
+						{
+							dp[i][j]=dp[i][j+1];
+						}
+					}
+					else if(i==1)
+					{
+						if(str[j]=='E')
+						{
+							dp[i][j]=dp[i+1][j+1]+dp[i][j+1];
+						}
+						else
+						{
+							dp[i][j]=dp[i][j+1];
+						}
+					}
+					else if(i==2)
+					{
+						if(str[j]=='K')
+						{
+							dp[i][j]=1+dp[i][j+1];
+						}
+						else
+						{
+							dp[i][j]=dp[i][j+1];
+						}
+					}
+				}
+			}
+		printf("%d\n",dp[0][0]);
+	}
+}
