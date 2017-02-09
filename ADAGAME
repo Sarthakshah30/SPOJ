@@ -1,0 +1,58 @@
+#include<iostream>
+
+	using namespace std;
+	bool calculate(int number,int turns);
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int number;
+		int turns;
+		cin>>number>>turns;
+		
+		if(calculate(number,turns))
+		cout<<"Ada"<<endl;
+		else
+		cout<<"Vinit"<<endl;
+	}
+}
+
+bool calculate(int number,int turns)
+{
+	bool dp[turns+1][10000];
+	
+	for(int i = 0 ; i <=turns ; i++)
+	{
+		for(int j = 0 ; j<=9999 ;j++)
+		{
+			if(i==0)
+			{
+				if(j<=number)
+				dp[i][j]=false;
+				else
+				dp[i][j]=true;
+			}
+			else
+			{
+				int A =( ((j)/1000) ==9 ? j-9000 : j+1000);
+				int B =( ((j)/100)%10 ==9 ? j-900 : j+100);
+				int C =( ((j)/10)%10 ==9 ? j-90 : j+10);
+				int D =( (j)%10 ==9 ? j-9 : j+1);
+				
+				if(number%2==0 && i%2==0 || number%2!=0 && i%2!=0)
+				{
+					dp[i][j]=dp[i-1][A]||dp[i-1][B]||dp[i-1][C]||dp[i-1][D];
+				}
+				else
+				{
+					dp[i][j]=dp[i-1][A]&&dp[i-1][B]&&dp[i-1][C]&&dp[i-1][D];
+				}
+			}
+		}
+	}
+	return dp[turns][number];
+
+}
