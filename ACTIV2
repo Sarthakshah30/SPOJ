@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+#include<vector>
+#include<cstring>
+using namespace std;
+
+		
+		
+int main()
+{
+	 int numOfClasses;
+	while(true)
+	{
+		typedef std::pair<int, int> myPair; 
+    	
+
+		scanf("%d",&numOfClasses);
+		if(numOfClasses==-1)
+		break;
+		std::vector <myPair> vect(numOfClasses);
+		for( int i = 0 ; i< numOfClasses ; i++)
+		{ scanf("%d%d",&vect[i].first,&vect[i].second); };
+		
+		sort(vect.begin(),vect.end());
+		long long int dp[numOfClasses+1];
+		memset(dp,0,sizeof(dp));
+		dp[numOfClasses]=1;
+		long long int sum = 0;
+		
+		for( int i = numOfClasses-1 ; i>=0 ;i--)
+		{
+			 int startTime = vect[i].second;
+			 vector<myPair>::iterator it1;
+			 myPair xd;
+			 xd.first = vect[i].first;
+			 xd.second = vect[i].second;
+			 it1 = lower_bound(vect.begin(), vect.end(), xd); 
+			 
+			
+			for(int j = it1 - vect.begin() ; j<numOfClasses ;j++)
+			{
+				if(vect[j].first>=vect[i].second)
+				dp[i]=(dp[i]+dp[j])%100000000;
+			}
+			dp[i]++;
+			sum=(sum+dp[i])%100000000;
+		}
+		
+		sum=sum%100000000;
+		printf("%08lld\n",sum);
+	}
+}
