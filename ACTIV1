@@ -1,0 +1,91 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+		int start[100000];
+		int endTime[100000];
+		void quickSort1(int low, int high);
+		 int partition( int low, int high);
+		
+int main()
+{
+	 int numOfClasses;
+	while(true)
+	{
+		scanf("%d",&numOfClasses);
+		if(numOfClasses==-1)
+		break;
+
+		for( int i = 0 ; i< numOfClasses ; i++)
+		scanf("%d%d",&start[i],&endTime[i]);
+		
+		quickSort1(0,numOfClasses-1);
+		
+		long long int dp[numOfClasses+1];
+		
+		dp[numOfClasses]=1;
+		long long int sum = 0;
+		for( int i = numOfClasses-1 ; i>=0 ;i--)
+		{
+			dp[i]=0;
+			
+			 int startTime = endTime[i];
+			 vector<int> v(start+i,start+numOfClasses);
+			 vector<int>::iterator it1;
+			 it1 = lower_bound(v.begin(), v.end(), startTime); 
+			 
+			
+			for(int j = it1 - v.begin() ; j<numOfClasses ;j++)
+			{
+				if(start[j]>=endTime[i])
+				dp[i]+=(dp[j]);
+			}
+			dp[i]++;
+			dp[i]=dp[i]%100000000;
+			sum+=(dp[i]);
+		}
+		
+		sum=sum%100000000;
+		printf("%08lld\n",sum);
+	}
+}
+
+void quickSort1( int low, int high)
+{
+	if(low<high)
+	{
+		int pivot = partition(low,high);
+		quickSort1(low,pivot-1);
+		quickSort1(pivot+1,high);
+	}
+}
+
+ int partition( int low, int high)
+{
+	 int pivot=start[high];
+	 int pIndex=low;
+	for( int i = low ; i<=high-1 ;i++)
+	{
+		if(start[i]<=pivot)
+		{
+			 int temp = start[i];
+			start[i]=start[pIndex];
+			start[pIndex]=temp;
+			temp = endTime[i];
+			endTime[i]=endTime[pIndex];
+			endTime[pIndex]=temp;
+			pIndex++;
+		}
+	}
+	
+	 int temp = start[high];
+	start[high]=start[pIndex];
+	start[pIndex]=temp;
+	temp = endTime[high];
+	endTime[high]=endTime[pIndex];
+	endTime[pIndex]=temp;
+	
+	return 	pIndex;	
+}
+
