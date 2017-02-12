@@ -1,0 +1,91 @@
+#include<iostream>
+#include<cstring>
+#include <sstream>
+#include<string>
+#include<cmath>
+using namespace std;
+
+long long int dp[10][2];
+long long int result(string &str,int index,int smaller);
+
+long long int func(int idx,int last,string s)
+ {
+  long long int num=0;
+  for(int i=idx;i<last;i++)
+   {
+    num=num*10+s[i]-'0';
+   }
+   return num;
+   
+ }
+
+int main()
+{
+	long long int a,b;
+	while(true)
+	{
+		cin>>a>>b;
+		if(a==-1 && b==-1)
+		break;
+		else
+		{
+			std::stringstream ss,rr;
+			ss<<(a-1);
+			string aa = ss.str();
+			rr<<(b);
+			string bb = rr.str();
+			memset(dp,-1,sizeof(dp));
+			long long int answer=result(bb,0,1);
+			memset(dp,-1,sizeof(dp));
+			answer=answer-result(aa,0,1);
+			cout<<answer<<endl;
+		}
+	}
+}
+
+long long int result(string &str,int index,int smaller)
+{
+	if(index>=str.size())
+	{
+		return 0;
+	}
+	if(dp[index][smaller]!=-1)
+	return dp[index][smaller];
+	else
+	{
+		
+
+		if(smaller==1)
+		{
+			long long int answer=0;
+			int limit = str[index]-'0';
+			for(int i = 0 ; i<=limit ;i++)
+			{
+				if(i==limit)
+				{
+					answer+=result(str,index+1,1)+i*(func(index+1,str.length(),str)+1);
+				
+				}
+				else
+				{
+					answer+=result(str,index+1,0)+(i*pow(10,str.length()-index-1));
+				}
+			}
+	
+			dp[index][smaller]=answer;
+			return answer;
+		}
+		else
+		{
+			long long int answer=0;	
+			for(int i = 0 ; i <=9 ;i++)
+			{
+				answer+=result(str,index+1,0)+(i*pow(10,str.length()-index-1));
+			}
+			dp[index][smaller]=answer;
+		
+			return answer;
+		}
+			
+	}
+}
