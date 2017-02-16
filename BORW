@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+
+
+#define inf 1000000000
+int dp[202][202][202];
+int array[202];
+int number;
+int calculate(int index,int dec,int inc);
+
+int main()
+{
+
+	while(true)
+	{
+		std::cin>>number;
+		if(number==-1)
+		break;
+		for(int i=0 ; i< number ;i++)
+		std::cin>>array[i];
+		array[201]=-inf;
+		array[200]=inf;
+		memset(dp,-1,sizeof(dp[0][0][0])*202*202*202);
+		int result=calculate(0,200,201);
+		std::cout<<result<<std::endl;
+	}
+}
+
+int calculate(int index,int dec,int inc)
+{
+	
+	if(dp[index][dec][inc]!=-1)
+	return dp[index][dec][inc];
+	
+	if(index==number)
+	return 0;
+	
+	if(array[index]<array[dec])
+	dp[index][dec][inc]=calculate(index+1,index,inc);
+	
+	if(array[index]>array[inc])
+	{
+		if(dp[index][dec][inc]==-1)
+		dp[index][dec][inc]=calculate(index+1,dec,index);
+		else
+		{
+			dp[index][dec][inc]=std::min(dp[index][dec][inc],calculate(index+1,dec,index));
+		}
+	}
+	
+	if(dp[index][dec][inc]==-1)
+	{
+		dp[index][dec][inc]=1+calculate(index+1,dec,inc);
+	}
+	else
+	dp[index][dec][inc]=std::min(dp[index][dec][inc],1+calculate(index+1,dec,inc));
+	
+	return dp[index][dec][inc];
+}
