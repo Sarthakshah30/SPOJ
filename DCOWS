@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+
+int main()
+{
+
+int mCow;
+int nBulls;
+
+	cin>>nBulls;
+	cin>>mCow;
+	
+	long long int cow[mCow];
+	long long int bulls[nBulls];	
+	
+	for(int i = 0 ; i < nBulls ; i++)
+	cin>>bulls[i];
+	for(int i = 0 ; i < mCow ; i++)
+	cin>>cow[i];
+	
+	sort(bulls,bulls+nBulls);
+	sort(cow,cow+mCow);
+
+	
+	long long int dp[mCow+1][nBulls+1];
+	memset(dp,-1,sizeof(dp[0][0])*(mCow+1)*(nBulls+1));
+	
+	for(int i =mCow ; i >= 0 ; i--)
+	{
+		for(int j = nBulls ; j>=0 ;j--)
+		{
+				if(i==mCow && j<nBulls)
+				{
+					dp[i][j]=LLONG_MAX;
+				}
+				
+				
+				else if(i<=mCow && j==nBulls)
+				{
+					dp[i][j]=0;
+				}
+
+				else
+				{
+				long long int local1=LLONG_MAX;
+				long long int local2=LLONG_MAX;
+				
+				if(dp[i+1][j+1]!=LLONG_MAX)
+				local1=abs(cow[i]-bulls[j])+dp[i+1][j+1];
+				
+				if(dp[i+1][j]!=LLONG_MAX)
+				local2=dp[i+1][j];
+				
+				dp[i][j]=min(local1,local2);
+				
+				
+				}
+			}
+		}
+	
+	
+	cout<<dp[0][0]<<endl;
+}
