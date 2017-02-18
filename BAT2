@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+#define inf 9999999
+
+using namespace std;
+
+int rooms[102];
+int number;
+int dp[102][102][102];
+int calculate(int index,int inc,int dec);
+
+int main()
+{
+	int test;
+	cin>>test;
+	rooms[101]=inf;
+	rooms[100]=-inf;
+	while(test-->0)
+	{
+		cin>>number;
+		for(int i = 0 ; i<number ; i++)
+		cin>>rooms[i];	
+		memset(dp,-1,sizeof(dp[0][0][0])*102*102*102);
+		int result=calculate(0,100,101);
+		cout<<number-result<<endl;
+	}
+}
+
+int calculate(int index,int inc,int dec)
+{
+	if(index==number)
+	return 0;
+	
+	if(dp[index][inc][dec]!=-1)
+	return dp[index][inc][dec];
+	
+	if(rooms[index]<rooms[dec])
+	{
+		dp[index][inc][dec]=calculate(index+1,inc,index);
+	}
+	
+	if(rooms[index]>rooms[inc])
+	{
+		if(dp[index][inc][dec]==-1)
+		dp[index][inc][dec]=calculate(index+1,index,dec);
+		else
+		dp[index][inc][dec]=min(dp[index][inc][dec],calculate(index+1,index,dec));
+	}
+	
+	if(dp[index][inc][dec]==-1)
+	dp[index][inc][dec]=1+calculate(index+1,inc,dec);
+	else
+	dp[index][inc][dec]=min(1+calculate(index+1,inc,dec),dp[index][inc][dec]);
+	
+	return dp[index][inc][dec];
+}
