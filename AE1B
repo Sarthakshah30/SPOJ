@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	long long int number;
+	long long int screws;
+	long long int tables;
+	cin>>number>>screws>>tables;
+	long long int total=screws*tables;
+	int array[number];
+	for(int i = 0 ; i< number ;i++)
+	cin>>array[i];
+	long long int sum=0;
+	sort(array, array+number, greater<int>());
+	int i;
+	for(i = 0 ; i <number ;i++)
+	{
+		sum=sum+array[i];
+		if(sum>=total)
+		break;
+	}
+	cout<<i+1<<endl;
+}
