@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int number[8];
+vector<int> v[8];
+int calc(int bitmasks);
+int dp[256];
+
+int main()
+{
+	for(int i = 0 ; i<8 ; i++)
+	cin>>number[i];
+	
+	int pairs;
+	cin>>pairs;
+	
+	for(int i=0 ; i< pairs ;i++)
+	{
+		int x,y;
+		cin>>x>>y;
+		v[x-1].push_back(y-1);
+		v[y-1].push_back(x-1);
+	}
+	memset(dp,-1,sizeof(dp));
+	cout<<calc(0)<<endl;
+}
+
+int calc(int bitmasks)
+{
+	if(bitmasks==255)
+	return 0;
+	if(dp[bitmasks]!=-1)
+	return dp[bitmasks];
+	
+	int sum =0;
+	
+	
+	for(int i = 0 ; i < 8 ; i++)
+	{
+		if((bitmasks&(1<<i))==0)
+		{
+			int local=0;
+			int j;
+			for(j = 0; j<8 ;j++)
+			{
+				if(std::find(v[i].begin(),v[i].end(),j)==v[i].end())
+				continue;
+				else
+				{
+					if((bitmasks &(1<<j))>=1)
+					break;
+				}
+			}
+			if(j<8)
+			{
+			
+			}
+			else
+			{
+			int y=bitmasks|(1<<i);
+			local=calc(y)+number[i];
+			if(local>sum)
+			sum=local;
+			}
+		}
+
+	}
+	dp[bitmasks]=sum;
+	return sum;
+}
