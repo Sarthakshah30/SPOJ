@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	string str;
+	cin>>str;
+	int lastindex[127];
+	memset(lastindex,-1,sizeof(lastindex));
+	
+	int max=0;
+	int current=0;
+	
+	for(int i = 0 ; i<str.size() ; i++)
+	{
+
+		if(lastindex[str[i]]==-1)
+		{
+			current++;
+
+
+		}
+		else
+		{
+			current++;
+			if(i-current+1 > lastindex[str[i]])
+			{
+				
+			}
+			else
+			{
+				current=i-lastindex[str[i]];
+
+			}
+		}
+			if(max<current)
+			max=current;
+		lastindex[str[i]]=i;
+	}
+	cout<<max<<endl;
+}
