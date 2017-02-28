@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int nodes,edges;
+	cin>>nodes>>edges;
+	
+	vector<int> list[nodes+1];
+	bool visited[nodes+1];
+	
+	for(int i = 0 ; i < edges ; i++)
+	{
+		int x,y;
+		cin>>x>>y;
+		list[x].push_back(y);
+		list[y].push_back(x);
+	}
+	
+	if(nodes==edges+1)
+	{
+		memset(visited,0,sizeof(visited));
+		
+		queue<int> q;
+		q.push(1);
+		visited[1]=true;
+		
+		while(!q.empty())
+		{
+			int front = q.front();
+			q.pop();
+			
+			for(int i = 0 ; i< list[front].size() ;i++)
+			{
+				if(!visited[list[front][i]])
+				{
+					q.push(list[front][i]);
+					visited[list[front][i]]=true;
+				}
+			}
+		}
+		
+		int i;
+		
+		for(i = 1 ; i <=nodes ;i++)
+		{
+			if(visited[i]==false)
+			break;
+		}
+		
+		if(i<=nodes)
+		cout<<"NO"<<endl;
+		else
+		cout<<"YES"<<endl;
+	}
+	else
+	{
+		cout<<"NO"<<endl;
+	}
+}
