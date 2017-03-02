@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int dobfs(const pair<int,int> &start, const pair<int,int> &end);
+
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		char start[3];
+		char end[3];
+		cin>>start>>end;
+		int x1,y1,x2,y2;
+		x1=start[1]-'1';
+		x2=end[1]-'1';
+		y1=start[0]-'a';
+		y2=end[0]-'a';
+		pair<int,int> s1(x1,y1);
+		pair<int,int> s2(x2,y2);
+		cout<<dobfs(s1,s2)<<endl;
+	}
+}
+
+int dobfs(const pair<int,int> &start, const pair<int,int> &end)
+{
+	bool visited[8][8];
+	int distance[8][8];
+	memset(visited,0,sizeof(visited));
+	queue< pair<int,int> > q;
+	visited[start.first][start.second]=true;
+	q.push(start);
+	distance[start.first][start.second]=0;
+	
+	while(!q.empty())
+	{
+		int x,y;
+		x=q.front().first;
+		y=q.front().second;
+		q.pop();
+		if(x==end.first && y==end.second)
+		return distance[x][y];
+		
+		if(x-2 >=0 && y+1 <8 && !visited[x-2][y+1])
+		{
+			q.push(make_pair(x-2,y+1));
+			visited[x-2][y+1]=true;
+			distance[x-2][y+1]=distance[x][y]+1;
+		}
+		
+		if(x-1 >=0 && y+2 <8 && !visited[x-1][y+2])
+		{
+			q.push(make_pair(x-1,y+2));
+			visited[x-1][y+2]=true;
+			distance[x-1][y+2]=distance[x][y]+1;
+		}
+
+		if(x-2 >=0 && y-1 >=0 && !visited[x-2][y-1])
+		{
+			q.push(make_pair(x-2,y-1));
+			visited[x-2][y-1]=true;
+			distance[x-2][y-1]=distance[x][y]+1;
+		}
+		
+		if(x-1 >=0 && y-2 >=0 && !visited[x-1][y-2])
+		{
+			q.push(make_pair(x-1,y-2));
+			visited[x-1][y-2]=true;
+			distance[x-1][y-2]=distance[x][y]+1;
+		}
+		
+		if(x+1 <8 && y+2 <8 && !visited[x+1][y+2])
+		{
+			q.push(make_pair(x+1,y+2));
+			visited[x+1][y+2]=true;
+			distance[x+1][y+2]=distance[x][y]+1;
+		}
+		
+		if(x+2 <8 && y+1 <8 && !visited[x+2][y+1])
+		{
+			q.push(make_pair(x+2,y+1));
+			visited[x+2][y+1]=true;
+			distance[x+2][y+1]=distance[x][y]+1;
+		}
+		
+		if(x+1 <8 && y-2 >=0 && !visited[x+1][y-2])
+		{
+			q.push(make_pair(x+1,y-2));
+			visited[x+1][y-2]=true;
+			distance[x+1][y-2]=distance[x][y]+1;
+		}
+		
+		if(x+2 <8 && y-1 >=0 && !visited[x+2][y-1])
+		{
+			q.push(make_pair(x+2,y-1));
+			visited[x+2][y-1]=true;
+			distance[x+2][y-1]=distance[x][y]+1;
+		}
+		
+		
+	}
+	
+}
