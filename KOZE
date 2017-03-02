@@ -1,0 +1,89 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int shipsleft,wolvesleft;
+int n,m;
+char maze[260][260];
+bool visited[260][260];
+void dobfs(bool bounday,int x,int y);
+
+int main()
+{
+	cin>>m>>n;
+	for(int i = 0 ; i < m ; i++)
+	cin>>maze[i];
+	shipsleft=wolvesleft=0;
+	memset(visited,false,sizeof(visited));
+	for(int i = 0 ; i < m ; i++)
+	{
+		for(int j = 0 ; j < n ; j++)
+		{
+			if(!visited[i][j] && maze[i][j]!='#')
+			{
+				if(i==0 || i==m-1 || j==0 || j==n-1)
+				dobfs(true,i,j);
+				else
+				dobfs(false,i,j);
+			}
+		}
+	}
+	cout<<shipsleft<<" "<<wolvesleft<<endl;
+	
+}
+
+void dobfs(bool bounday,int x,int y)
+{
+	int sheep,wolves;
+	sheep=wolves=0;
+	queue< pair<int,int> > q;
+	visited[x][y]=true;
+	q.push(make_pair(x,y));
+	while(!q.empty())
+	{
+		int i,j;
+		i=q.front().first;
+		j=q.front().second;
+		
+		q.pop();
+		
+		if(maze[i][j]=='k')
+		sheep++;
+		if(maze[i][j]=='v')
+		wolves++;
+		
+		if(i-1 >=0 && !visited[i-1][j] && maze[i-1][j]!='#')
+		{
+			visited[i-1][j]=true;
+			q.push(make_pair(i-1,j));
+		}
+		if(i+1 < m && !visited[i+1][j] && maze[i+1][j] !='#')
+		{
+			visited[i+1][j]=true;
+			q.push(make_pair(i+1,j));			
+		}
+		if(j-1 >=0 && !visited[i][j-1] && maze[i][j-1] !='#')
+		{
+			visited[i][j-1]=true;
+			q.push(make_pair(i,j-1));			
+		}
+		if(j+1 < n && !visited[i][j+1] && maze[i][j+1] !='#')
+		{
+			visited[i][j+1]=true;
+			q.push(make_pair(i,j+1));			
+		}
+	}
+	
+	if(bounday==true)
+	{
+		shipsleft+=sheep;
+		wolvesleft+=wolves;
+	}
+	else
+	{
+		if(sheep>wolves)
+		shipsleft+=sheep;
+		else
+		wolvesleft+=wolves;		
+	}
+}
