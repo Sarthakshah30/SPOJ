@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int floors,start,goal,up,down;
+
+int main()
+{
+	cin>>floors>>start>>goal>>up>>down;
+	floors--;
+	start--;
+	goal--;
+	
+	
+	bool visited[floors+1];
+	int distance[floors+1];
+	memset(visited,0,sizeof(visited));
+	memset(distance,-1,sizeof(distance));
+	
+	queue<int> q;
+	q.push(start);
+	visited[start]=true;
+	distance[start]=0;
+	
+	bool flag=false;
+	
+	while(!q.empty())
+	{
+		int current = q.front();
+		q.pop();
+		if(current==goal)
+		{
+			flag=true;
+			break;
+		}
+		
+		if(current+up <=floors && !visited[current+up])
+		{
+			q.push(current+up);
+			visited[current+up]=true;
+			distance[current+up]=distance[current]+1;
+		}
+		
+		if(current-down >=0 && !visited[current-down])
+		{
+			q.push(current-down);
+			visited[current-down]=true;
+			distance[current-down]=distance[current]+1;
+		}
+	}
+	
+	if(flag)
+	cout<<distance[goal]<<endl;
+	else
+	cout<<"use the stairs"<<endl;
+}
