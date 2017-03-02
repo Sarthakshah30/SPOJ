@@ -1,0 +1,103 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const char * dobfs(int m,int n);
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int m,n;
+		cin>>m>>n;
+		cout<<dobfs(m,n)<<endl;
+	}
+}
+
+const char * dobfs(int m,int n)
+{
+	char maze[m][n];
+	for(int i = 0 ; i < m  ;i++)
+	for(int j = 0 ; j < n ; j++)
+	cin>>maze[i][j];
+	
+	vector< pair<int,int> > extreme;
+	
+
+	for(int j= 0 ; j < n ;j++)
+		{
+			if(maze[0][j]=='.')
+			{
+				extreme.push_back(make_pair(0,j));
+			}
+			if(m-1!=0 && maze[m-1][j]=='.')
+			{
+				extreme.push_back(make_pair(m-1,j));
+			}
+		}
+		
+	for(int i = 1 ; i < m-1 ; i++)
+		{
+			if(maze[i][0]=='.')
+			{
+				extreme.push_back(make_pair(i,0));
+			}
+			if(n-1!=0 && maze[i][n-1]=='.')
+			{
+				extreme.push_back(make_pair(i,n-1));
+			}
+		}
+	
+	
+	if(extreme.size()!=2)
+	return "invalid";
+	
+	
+	queue< pair<int,int> > q;
+	bool visited[m][n];
+	memset(visited,0,sizeof(visited));
+	
+	q.push(extreme[0]);
+	visited[extreme[0].first][extreme[0].second]=true;
+	
+	while(!q.empty())
+	{
+		int x,y;
+		x=q.front().first;
+		y=q.front().second;
+		
+		if(x==extreme[1].first && y==extreme[1].second)
+		return "valid";
+		
+		q.pop();
+		
+		if(x-1>=0 && maze[x-1][y]=='.' && !visited[x-1][y])
+		{
+			q.push(make_pair(x-1,y));
+			visited[x-1][y]=true;
+		}
+		
+		if(x+1 < m && maze[x+1][y]=='.' && !visited[x+1][y])
+		{
+			q.push(make_pair(x+1,y));
+			visited[x+1][y]=true;
+		}
+		
+		if(y-1 >=0 && maze[x][y-1]=='.' && !visited[x][y-1])
+		{
+			q.push(make_pair(x,y-1));
+			visited[x][y-1]=true;
+		}
+		
+		if(y+1 < n && maze[x][y+1]=='.' && !visited[x][y+1])
+		{
+			q.push(make_pair(x,y+1));
+			visited[x][y+1]=true;
+		}
+		
+	}
+	
+	return "invalid";
+}
