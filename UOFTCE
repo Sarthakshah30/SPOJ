@@ -1,0 +1,99 @@
+#include<iostream>
+#include<queue>
+#include<map>
+#include<algorithm>
+#include<cstring>
+#include<utility>
+
+	
+	int distance[101][101];
+	int row,col;
+	char maze[101][101];
+	bool visited[101][101];
+	std::vector<int> stores;
+	void dobfs(const std::pair<int,int> &car);
+	
+
+int main()
+{
+	int test;
+	std::cin>>test;
+	while(test-->0)
+	{
+		stores.clear();
+		std::cin>>row>>col;
+		for(int i =0 ; i < row ; i++)
+		std::cin>>maze[i];
+		memset(visited,false,sizeof(visited));
+		
+		std::pair<int,int> car;
+		
+		for(int i = 0 ; i < row ; i++)
+			for(int j = 0 ; j < col ; j++)
+			if(maze[i][j]=='C')
+			{
+				car = std::make_pair(i,j);
+				break;
+			}
+		dobfs(car);
+	}
+}
+
+void dobfs(const std::pair<int,int> &car)
+{
+	std::queue< std::pair<int,int> > q;
+	distance[car.first][car.second]=0;
+	visited[car.first][car.second]=true;
+	q.push(car);
+	while(!q.empty())
+	{
+		int x=q.front().first;
+		int y=q.front().second;
+		q.pop();
+		
+		if(x-1>=0 && !visited[x-1][y] && maze[x-1][y]!='#')
+		{
+			distance[x-1][y]=distance[x][y]+1;
+			visited[x-1][y]=true;
+			if(maze[x-1][y]=='S')
+			stores.push_back(distance[x-1][y]);
+			q.push(std::make_pair(x-1,y));
+		}
+		if(x+1<row && !visited[x+1][y] && maze[x+1][y]!='#')
+		{
+			distance[x+1][y]=distance[x][y]+1;
+			visited[x+1][y]=true;
+			if(maze[x+1][y]=='S')
+			stores.push_back(distance[x+1][y]);
+			q.push(std::make_pair(x+1,y));
+		}	
+		if(y-1>=0 && !visited[x][y-1] && maze[x][y-1]!='#')
+		{
+			distance[x][y-1]=distance[x][y]+1;
+			visited[x][y-1]=true;
+			if(maze[x][y-1]=='S')
+			stores.push_back(distance[x][y-1]);
+			q.push(std::make_pair(x,y-1));
+		}
+		if(y+1<col && !visited[x][y+1] && maze[x][y+1]!='#')
+		{
+			distance[x][y+1]=distance[x][y]+1;
+			visited[x][y+1]=true;
+			if(maze[x][y+1]=='S')
+			stores.push_back(distance[x][y+1]);
+			q.push(std::make_pair(x,y+1));
+		}	
+	}
+	
+	int sum=0;
+
+	for(int i = stores.size()-1 ; i>=0;i--)
+	{
+		if(i==stores.size()-1)
+		sum+=stores[i];
+		else
+		sum+=stores[i]*2;
+	}
+	sum+=stores.size()*60;
+	std::cout<<sum<<std::endl;
+}
