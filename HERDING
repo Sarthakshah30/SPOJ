@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+
+	using namespace std;
+	int row,col;
+	char maze[1001][1001];
+	int visited[1001][1001];
+	void dobfs(int x,int y);
+	
+int main()
+{
+	cin>>row>>col;
+	for(int i = 0 ; i < row ; i++)
+	cin>>maze[i];
+	int count=0;
+	memset(visited,false,sizeof(visited));
+	for(int i = 0 ; i < row ; i++)
+		{
+			for(int j = 0 ; j < col ; j++)
+			{
+				if(!visited[i][j])
+				{
+					count++;
+					dobfs(i,j);
+				}
+			}
+		}
+	cout<<count<<endl;
+}
+
+void dobfs(int x,int y)
+{
+	pair<int,int> mypair(x,y);
+	visited[x][y]=true;
+	queue< pair<int,int> > q;
+	q.push(mypair);
+	
+	while(!q.empty())
+	{
+		int i=q.front().first;
+		int j=q.front().second;
+		q.pop();
+		
+		if(i-1 >=0 && !visited[i-1][j] && (maze[i][j]=='N' || maze[i-1][j]=='S'))
+		{
+			visited[i-1][j]=true;
+			q.push(make_pair(i-1,j));
+		}
+		if(i+1 <row && !visited[i+1][j] && (maze[i][j]=='S' || maze[i+1][j]=='N'))
+		{
+			visited[i+1][j]=true;
+			q.push(make_pair(i+1,j));
+		}
+		if(j-1>=0 && !visited[i][j-1] && (maze[i][j]=='W' || maze[i][j-1]=='E'))
+		{
+			visited[i][j-1]=true;
+			q.push(make_pair(i,j-1));
+		}
+		if(j+1<col && !visited[i][j+1] && (maze[i][j]=='E' || maze[i][j+1]=='W'))
+		{
+			visited[i][j+1]=true;
+			q.push(make_pair(i,j+1));
+		}
+	}
+}
