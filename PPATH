@@ -1,0 +1,107 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+bool prime[10000];
+
+void markprime()
+{
+	memset(prime,true,sizeof(prime));
+	for(int i = 2 ; i*i<=9999 ; i++)
+	{
+		if(prime[i])
+		{
+			for(int j = i*2 ; j<=9999 ; j+=i)
+			prime[j]=false;	
+		}
+	}
+}
+
+void dobfs(int start,int end);
+
+int main()
+{
+	markprime();
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		int start,end;
+		cin>>start>>end;
+		dobfs(start,end);
+	}
+}
+
+void dobfs(int start,int end)
+{
+	short dist[10000];
+	memset(dist,-1,sizeof(dist));
+	queue<int> q;
+	dist[start]=0;
+	q.push(start);
+	while(!q.empty())
+	{
+		int current = q.front();
+		q.pop();
+		if(current==end)
+		break;
+		
+		for(int i = 1 ; i <=9 ; i++)
+		{
+			if(current/1000 == i)
+			continue;
+			int local = current%1000 + 1000*i;
+			if(dist[local]==-1 && prime[local])
+			{
+				q.push(local);
+				dist[local]=dist[current]+1;
+			}
+		}
+		
+		for(int i = 0 ; i<=9 ; i++)
+		{
+			if((current - (current/1000)*1000)/100 ==i)
+			continue;
+			int local = (current/1000 )* 1000 + current%100 + i*100;
+			if(dist[local]==-1 && prime[local])
+			{
+				q.push(local);
+				dist[local]=dist[current]+1;
+			}
+		}
+		
+		for(int i = 0 ; i <=9 ; i++)
+		{
+			if((current%100)/10==i)
+			continue;
+			int local = (current/100)*100 + current%10 + i*10;
+			if(dist[local]==-1 && prime[local])
+			{
+				q.push(local);
+				dist[local]=dist[current]+1;
+			}
+		}
+		
+		for(int i = 1 ; i <=9 ; i++)
+		{
+			if(i%2==0)
+			continue;
+			
+			if((current/10)==i)
+			continue;
+			int local = (current/10)*10 + i;
+			
+			if(dist[local]==-1 && prime[local])
+			{
+				q.push(local);
+				dist[local]=dist[current]+1;
+			}
+		}		
+		
+	}
+	
+	if(dist[end]==-1)
+	cout<<"Impossible"<<endl;
+	else
+	cout<<dist[end]<<endl;
+}
