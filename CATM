@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int row,col;
+bool visited[101][101];
+pair<int,int> mouse;
+pair<int,int> cat1;
+pair<int,int> cat2;
+pair<int,int> boundtop;
+pair<int,int> boundbottom;
+pair<int,int> boundleft;
+pair<int,int> boundright;
+
+int main()
+{
+	cin>>row>>col;
+	int k;
+	cin>>k;
+	while(k-->0)
+	{
+		int a,b,c,d,e,f;
+		cin>>a>>b>>c>>d>>e>>f;
+		mouse = make_pair(a-1,b-1);
+		cat1 = make_pair(c-1,d-1);
+		cat2 = make_pair(e-1,f-1);
+		boundtop = make_pair(0,b-1);
+		boundbottom=make_pair(row-1,b-1);
+		boundleft=make_pair(a-1,0);
+		boundright=make_pair(a-1,col-1);
+		
+		if(   (abs(boundtop.first-mouse.first)+abs(boundtop.second-mouse.second)) < (abs(boundtop.first-cat1.first)+abs(boundtop.second-cat1.second)) &&
+				(abs(boundtop.first-mouse.first)+abs(boundtop.second-mouse.second)) < (abs(boundtop.first-cat2.first)+abs(boundtop.second-cat2.second)) )
+		{
+			cout<<"YES"<<endl;
+		}
+		
+		else if(
+		(abs(boundbottom.first-mouse.first)+abs(boundbottom.second-mouse.second)) < (abs(boundbottom.first-cat1.first)+abs(boundbottom.second-cat1.second)) &&
+				(abs(boundbottom.first-mouse.first)+abs(boundbottom.second-mouse.second)) < (abs(boundbottom.first-cat2.first)+abs(boundbottom.second-cat2.second))
+		)
+		{
+			cout<<"YES"<<endl;
+		}
+		
+		else if(
+			(abs(boundleft.first-mouse.first)+abs(boundleft.second-mouse.second)) < (abs(boundleft.first-cat1.first)+abs(boundleft.second-cat1.second)) &&
+				(abs(boundleft.first-mouse.first)+abs(boundleft.second-mouse.second)) < (abs(boundleft.first-cat2.first)+abs(boundleft.second-cat2.second))
+		)
+				{
+			cout<<"YES"<<endl;
+		}
+		
+		else if(
+		(abs(boundright.first-mouse.first)+abs(boundright.second-mouse.second)) < (abs(boundright.first-cat1.first)+abs(boundright.second-cat1.second)) &&
+				(abs(boundright.first-mouse.first)+abs(boundright.second-mouse.second)) < (abs(boundright.first-cat2.first)+abs(boundright.second-cat2.second))
+		)
+		
+						{
+			cout<<"YES"<<endl;
+		}
+		
+		else
+		cout<<"NO"<<endl;
+	}
+}
