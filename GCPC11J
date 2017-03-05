@@ -1,0 +1,65 @@
+#include<iostream>
+#include<queue>
+#include<cstring>
+#include<vector>
+
+using namespace std;
+
+vector<int> adj[100000];
+	int dist[100000];
+	int N;
+int dobfs(int source);
+
+int main()
+{
+	int test;
+	cin>>test;
+	while(test-->0)
+	{
+		cin>>N;
+		for(int i = 0 ; i <N-1 ; i++)
+		{
+			int x,y;
+			cin>>x>>y;
+			adj[x].push_back(y);
+			adj[y].push_back(x);
+		}
+		memset(dist,-1,sizeof(dist));
+		int last=dobfs(0);
+		memset(dist,-1,sizeof(dist));
+		last=dobfs(last);
+		if(dist[last]%2==0)
+		cout<<(dist[last]/2)<<endl;
+		else
+		cout<<((dist[last]+1)/2)<<endl;
+	}
+}
+
+int dobfs(int source)
+{
+	queue<int> q;
+	q.push(source);
+	int vertex;
+	dist[source]=0;
+	while(!q.empty())
+	{
+		int x = q.front();
+		q.pop();
+		
+		for(int i = 0; i < adj[x].size() ; i++)
+		{
+			if(dist[adj[x][i]]==-1)
+			{
+				dist[adj[x][i]]=dist[x]+1;
+				q.push(adj[x][i]);
+			}
+		}
+	}
+	vertex=source;
+	
+	for(int i = 0 ; i <N ; i++)
+	if(dist[i]>dist[vertex])
+	vertex=i;
+	
+	return vertex;
+}
