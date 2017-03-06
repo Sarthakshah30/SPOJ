@@ -1,0 +1,87 @@
+#include<iostream>
+#include<cstring>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+#define MOD 1000000007
+
+vector<int> vec[10];
+
+long long int dp[10][100111];
+
+void initialize()
+{
+	vec[0].push_back(7);
+	vec[1].push_back(2);
+	vec[1].push_back(4);
+	vec[2].push_back(1);
+	vec[2].push_back(5);
+	vec[2].push_back(3);
+	vec[3].push_back(2);
+	vec[3].push_back(6);
+	vec[4].push_back(1);
+	vec[4].push_back(5);
+	vec[4].push_back(7);
+	vec[5].push_back(2);
+	vec[5].push_back(4);
+	vec[5].push_back(6);
+	vec[5].push_back(8);
+	vec[6].push_back(3);
+	vec[6].push_back(5);
+	vec[6].push_back(9);
+	vec[7].push_back(4);
+	vec[7].push_back(8);
+	vec[7].push_back(0);	
+	vec[8].push_back(7);
+	vec[8].push_back(5);
+	vec[8].push_back(9);
+	vec[9].push_back(6);
+	vec[9].push_back(8);
+	
+	for(int i =1 ; i<100111 ; i++)
+	{
+		for(int digit = 0 ; digit<=9 ; digit++)
+		{
+			if(i==1)
+			{
+				dp[digit][1]=1;
+				continue;
+			}
+			long long int temp=0;
+			
+			for(int j = 0 ; j<=9 ; j++)
+			{
+				if(std::find(vec[digit].begin(),vec[digit].end(),j)!=vec[digit].end())
+				{
+					temp+=dp[j][i-1];
+				}
+				if(temp>=MOD)
+				{
+					temp=temp%MOD;
+				}
+			}
+			
+			dp[digit][i]=temp;
+		}
+	}
+}
+
+int main()
+{
+	initialize();
+	int test;
+	cin>>test;
+	
+	while(test-->0)
+	{
+		int n;
+		cin>>n;
+		long long int sum=0;
+		for(int i = 0 ; i<=9 ; i++)
+		sum=(sum+dp[i][n])%MOD;
+		cout<<sum<<endl;
+	}
+}
+
+
