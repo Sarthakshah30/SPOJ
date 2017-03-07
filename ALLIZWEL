@@ -1,0 +1,87 @@
+#include<iostream>
+#include<cstring>
+#include<vector>
+#include<stack>
+using namespace std;
+
+struct tup{
+	int x;
+	int y;
+	int index;
+};
+
+char text[]="ALLIZZWELL";
+int R,C;
+char maze[101][101];
+int dx[]={-1,-1,0,1,1,1,0,-1};
+int dy[]={0,1,1,1,0,-1,-1,-1};
+bool dodfs(int x,int y);
+
+int main(){
+	int test;
+	cin>>test;
+	while(test-->0){
+		cin>>R>>C;
+		for(int i = 0 ; i<R ; i++)
+		cin>>maze[i];
+		
+		for(int i = 0 ; i < R ; i++){
+			for(int j = 0 ; j < C ; j++){
+				if(maze[i][j]=='A'){
+					if(dodfs(i,j)){
+						goto label1;
+					}
+				}
+			}
+		}
+		cout<<"NO"<<endl;
+		goto label2;
+		label1:
+		cout<<"YES"<<endl;
+		label2:
+		;
+	}
+}
+
+bool dodfs(int i,int j){
+
+	stack<tup> s;
+	bool visited[R][C];
+	memset(visited,0,sizeof(visited));
+	visited[i][j]=false;
+	tup t={i,j,0};
+	s.push(t);
+	while(!s.empty()){
+		int p = s.top().x;
+		int q = s.top().y;
+		if(visited[p][q]==true)
+		{
+			visited[p][q]=false;
+			s.pop();
+		}
+		else
+		{
+		
+		visited[p][q]=true;
+		int counts = s.top().index;
+		if(counts==9)
+		return true;
+	
+		
+		bool flag=true;
+		for(int a = 0 ; a<8 ; a++)
+		{
+			if(p+dx[a] >=0 && p+dx[a]<R && q+dy[a] >=0 && q+dy[a]<C && !visited[p+dx[a]][q+dy[a]] && maze[p+dx[a]][q+dy[a]]==text[counts+1])
+			{
+				tup x={p+dx[a],q+dy[a],counts+1};
+				s.push(x);
+				flag=false;
+			}
+
+		}
+
+		}
+		
+	}
+	return false;
+}
