@@ -1,0 +1,69 @@
+#include<iostream>
+#include<queue>
+#include<cstring>
+#include<vector>
+using namespace std;
+
+int N,E;
+vector<int> vec[2000];
+	int level[2000];
+bool check_bipartite(int source);
+
+int main(){
+	int test;
+	cin>>test;
+	for(int m = 1 ; m<=test ; m++){
+		cin>>N>>E;
+		int x,y;
+		for(int k=1 ; k<=E ;k++){
+			cin>>x>>y;
+			vec[x-1].push_back(y-1);
+			vec[y-1].push_back(x-1);
+		}
+		cout<<"Scenario #"<<m<<":"<<endl;
+			memset(level,-1,sizeof(level));
+			
+		int i;	
+		for(i=0 ; i <N ; i++)
+		if(level[i]==-1){
+			if(!check_bipartite(i))
+			break;
+		}
+		
+		
+		
+		if(i==N)
+		cout<<"No suspicious bugs found!"<<endl;
+		else
+		cout<<"Suspicious bugs found!"<<endl;
+		
+		for(i = 0 ; i <N ; i++)
+		vec[i].clear();
+	}
+}
+
+bool check_bipartite(int source){
+	
+
+
+	queue<int> q;
+	q.push(source);
+	level[source]=0;
+	while(!q.empty()){
+		
+		int x = q.front();
+		q.pop();
+		for(int i=0 ; i<vec[x].size() ; i++){
+			if(level[vec[x][i]]==-1){
+				level[vec[x][i]]=level[x]+1;
+				q.push(vec[x][i]);
+			}
+			else{
+				if(level[x]==level[vec[x][i]]){
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
