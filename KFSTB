@@ -1,0 +1,44 @@
+#include<iostream>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<cstring>
+using namespace std;
+
+vector<int> *vec;
+int V,E,source,destination;
+long long int dodfs(int s,int d);
+long long int dp[10005][10005];
+
+int main(){
+	int test;
+	scanf("%d",&test);
+	while(test-->0){
+		
+		memset(dp,-1,sizeof(dp));
+		scanf("%d%d%d%d",&V,&E,&source,&destination);
+		vec = new vector<int>[V];
+		int x,y;
+		source--;
+		destination--;
+		for(int i = 1 ; i<=E ; i++){
+			scanf("%d%d",&x,&y);
+			vec[x-1].push_back(y-1);
+		}
+		printf("%lld\n",dodfs(source,destination));
+
+	}
+}
+
+long long int dodfs(int s,int d){
+	if(s==d)
+	return 1;
+	if(dp[s][d]!=-1)
+	return dp[s][d];
+	int ans=0;
+	for(int i = 0 ;i<vec[s].size(); i++){
+		ans=(ans+dodfs(vec[s][i],d))%1000000007;
+	}
+	
+	return dp[s][d]=ans;
+}
