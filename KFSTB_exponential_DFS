@@ -1,0 +1,60 @@
+#include<iostream>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<cstring>
+using namespace std;
+
+vector<int> *vec;
+int V,E,source,destination;
+long long int dodfs(int s,int d);
+
+int main(){
+	int test;
+	scanf("%d",&test);
+	while(test-->0){
+		
+		scanf("%d%d%d%d",&V,&E,&source,&destination);
+		vec = new vector<int>[V];
+		int x,y;
+		source--;
+		destination--;
+		for(int i = 1 ; i<=E ; i++){
+			scanf("%d%d",&x,&y);
+			vec[x-1].push_back(y-1);
+		}
+		printf("%lld\n",dodfs(source,destination));
+
+	}
+}
+
+long long int dodfs(int s,int d){
+	bool visited[V];
+	memset(visited,0,sizeof(visited));
+	long long int ans=0;
+	stack<int> st;
+	st.push(s);
+	while(!st.empty()){
+		int x=st.top();
+		if(x==d){
+			visited[x]=false;
+			ans=(ans+1)%1000000007;
+			st.pop();
+		}
+		else if(visited[x]){
+			st.pop();
+			visited[x]=false;
+		}
+		else{		
+			visited[x]=true;
+			for(int i = 0 ; i < vec[x].size() ;i++){
+				int y = vec[x][i];
+				if(!visited[y]){
+					st.push(y);
+				}
+			}
+		}
+		
+	}
+	return ans;
+}
