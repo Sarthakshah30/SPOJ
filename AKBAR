@@ -1,0 +1,75 @@
+#include<iostream>
+#include<stack>
+#include<queue>
+#include<cstring>
+using namespace std;
+
+long long int N,R,M;
+vector<long long int> *adj;
+bool *visited;
+int dobfs(long long int source,long long int power);
+
+int main(){
+	int test;
+	cin>>test;
+	while(test-->0){
+	 cin>>N>>R>>M;
+	 visited = new bool[N];
+	 memset(visited,0,sizeof(visited));
+	 adj = new vector<long long int>[N];
+	 long long int x,y;
+	 for(long long int i = 0 ; i<R ; i++){
+	 	cin>>x>>y;
+	 	adj[x-1].push_back(y-1);
+	 	adj[y-1].push_back(x-1);
+	 }
+	 bool flag=false;
+	 for(long long int i = 0 ; i <M ; i++){
+	 	cin>>x>>y;
+	 	--x;
+	 	if(visited[x])
+	 	flag=true;
+	 	if(y==0 && !visited[x])
+	 	visited[x]=true;
+		else if(y!=0 && !flag){
+		visited[x]=true;
+		if(dobfs(x,y))
+	 	flag=true;
+		}	
+	 }
+	 if(!flag)
+	 cout<<"Yes"<<endl;
+	 else
+	 cout<<"No"<<endl;
+	}
+}
+
+int dobfs(long long int source,long long int power){
+	bool vist[N];
+	long long int dist[N];
+	memset(vist,0,sizeof(vist));
+	memset(dist,-1,sizeof(dist));
+	vist[source]=true;
+	dist[source]=0;
+	queue<long long int> q;
+	q.push(source);
+	while(!q.empty()){
+		long long int x=q.front();
+		q.pop();
+		if(dist[x]==power)
+		return 0;
+		for(long long int i = 0 ; i<adj[x].size() ;i++){
+			if(visited[adj[x][i]] &&!vist[adj[x][i]])
+			return 1;
+			else if(!vist[adj[x][i]] && !vist[adj[x][i]]){
+				vist[adj[x][i]]=true;
+				visited[adj[x][i]]=true;
+				q.push(adj[x][i]);
+				dist[adj[x][i]]=dist[x]+1;
+			}
+			else{
+			}
+		}
+	}
+	return 0;
+}
