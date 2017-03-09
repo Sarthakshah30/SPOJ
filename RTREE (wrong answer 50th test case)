@@ -1,0 +1,60 @@
+#include<iostream>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<cstring>
+
+using namespace std;
+
+vector<long long int> *adj;
+long long int N;
+long long int *dp;
+long long int root;
+long long int calcu(long long int r);
+
+int main(){
+	long long int x,y,Q;
+	cin>>N;
+	adj = new vector<long long int>[N];
+	dp = new long long int[N];
+	memset(dp,0,sizeof(dp));
+	for(long long int i = 1; i<N ; i++){
+		cin>>x>>y;
+		adj[x-1].push_back(y-1);
+	}
+	cin>>root;
+	calcu(root-1);
+	cin>>Q;
+	for(long long int i = 0 ; i<Q ; i++){
+		cin>>x;
+		cout<<dp[x-1]<<endl;
+	}
+}
+
+long long int calcu(long long int r){
+	if(adj[r].size()==0){
+		dp[r]=0;
+		return 0;
+	}
+	long long int local,i,j,max2=0,max1=0;
+	vector<long long int> aux;
+	
+	for(i = 0 ; i<adj[r].size() ;i++){
+		local=calcu(adj[r][i])+1;
+		aux.push_back(local);
+		if(local>=max1){
+			max1=local;
+			j=i;
+		}
+	}
+	
+	j=adj[r].size()-1-j;
+	for(i= 0; i<aux.size();i++){
+		if(i==j)
+		continue;
+		if(aux[i]>=max2)
+		max2=aux[i];
+	}
+	dp[r]=max2+max1;
+	return max1;
+}
