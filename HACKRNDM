@@ -1,0 +1,38 @@
+#include<iostream>
+#include<cstdio>
+#include<vector>
+#include<stack>
+#include<algorithm>
+
+using namespace std;
+
+int k;
+int n;
+
+int main(){
+	scanf("%d%d",&n,&k); 
+	int array[n];
+	for(int i = 0 ; i< n ; i++){
+		scanf("%d",&array[i]);
+	}
+	sort(array,array+n);
+	int pairs = 0;
+	for(int i = 0 ; i < n-1 ; i ++){
+		int x = array[i];
+		int y = x+k;
+		int low = i+1,high = n-1;
+		while(low<=high){
+			int mid = (low+high)/2;
+			if(array[mid]==y)
+			break;
+			else if(array[mid]>y)
+			high=mid-1;
+			else
+			low=mid+1;
+		}
+		if(low<=high)
+		pairs++;
+	}
+	cout<<pairs<<endl;
+}
+
